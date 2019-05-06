@@ -32,33 +32,51 @@ public class HGUCoursePatternAnalyzer {
 		
 		numOfStudents = Integer.parseInt(args[0]);
 		numOfCourses = Integer.parseInt(args[1]);
-	
-		students = initiateStudentArrayFromLines(lines);
 		
+		students = initiateStudentArrayFromLines(lines);
 		System.out.println("Number of All Students: " + numOfStudents);
 		for(Student student: students) {
 			System.out.println(student.getName());
 		}
-		
+
 		courses = initiateCourseArrayFromLines(lines);
 		System.out.println("Number of All Courses: " + numOfCourses);
 		for(Course course: courses) {
 			System.out.println(course.getCourseName());
 		}
-		
-	}
 
+	}
 	/**
 	 * This method returns a Student array to initiate the field, students, from lines.
 	 * @param lines
 	 * @return
 	 */
+
 	private Student[] initiateStudentArrayFromLines(String[] lines) {
-		
 		// TODO: implement this method
+		int j = 0;
 		
+		Student[] forCompare;
 		
-		return null;
+		students = new Student[numOfStudents];
+		forCompare = new Student[lines.length];
+		
+		for(int i =0;i<numOfStudents;i++)
+			students[i] = new Student("trashValue");	
+			
+		for(int i =0;i<lines.length;i++) {
+			
+				forCompare[i] = new Student(lines[i].split(",")[1].trim());
+				
+					if(studentExist(students, forCompare[i])) {
+						
+						students[j] = new Student(lines[i].split(",")[1].trim());
+						j++;
+					}
+					
+		}
+		
+		return students;
 	}
 
 	/**
@@ -67,23 +85,47 @@ public class HGUCoursePatternAnalyzer {
 	 * @param student
 	 * @return boolean
 	 */
+ 
 	private boolean studentExist(Student[] students, Student student) {
 		
-		// TODO: implement this method
-
-		return false;
+		for(Student std:students) {
+			if((std.getName()).equals(student.getName())) {
+				return false;
+			}
+		}
+		return true;
+		
 	}
-	
+
 	/**
 	 * This method returns a Course array to initiate the field, courses, from lines.
 	 * @param lines
 	 * @return
 	 */
+
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
 		
-		// TODO: implement this method
+		int j = 0;
 		
-		return null;
+		Course[] forCompare;
+		
+		courses = new Course[numOfCourses];
+		forCompare = new Course[lines.length];
+		
+		for(int i =0;i<numOfCourses;i++)
+			courses[i] = new Course("trashValue");	
+			
+		for(int i =0;i<lines.length;i++) {
+				forCompare[i] = new Course(lines[i].split(",")[2].trim());
+					if(courseExist(courses, forCompare[i])) {
+						courses[j] = new Course(lines[i].split(",")[2].trim());
+						j++;
+					}
+					
+		}
+		
+		return courses;
+	
 	}
 
 	/**
@@ -92,11 +134,15 @@ public class HGUCoursePatternAnalyzer {
 	 * @param course
 	 * @return boolean
 	 */
+
 	private boolean courseExist(Course[] courses, Course course) {
 		
-		// TODO: implement this method
-
-		return false;
+		for(Course crs:courses) {
+			if((crs.getCourseName()).equals(course.getCourseName())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
