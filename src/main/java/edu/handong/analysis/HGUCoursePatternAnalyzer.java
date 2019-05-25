@@ -2,6 +2,7 @@ package edu.handong.analysis;
 
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
+import java.util.ArrayList;
 
 public class HGUCoursePatternAnalyzer {
 	
@@ -21,8 +22,9 @@ public class HGUCoursePatternAnalyzer {
 
 	int numOfStudents;
 	int numOfCourses;
-	Student[] students;
-	Course[] courses;
+	
+	private ArrayList<Student> students;
+	private ArrayList<Course> courses;
 	
 	/**
 	 * This method runs our analysis logic to get the list of student and course names from lines.
@@ -52,26 +54,21 @@ public class HGUCoursePatternAnalyzer {
 	 * @return
 	 */
 
-	private Student[] initiateStudentArrayFromLines(String[] lines) {
+	private  ArrayList<Student> initiateStudentArrayFromLines(String[] lines) {
 		// TODO: implement this method
-		int j = 0;
+
+		ArrayList<Student> students = new ArrayList<Student>(numOfStudents);
+
 		
-		Student[] forCompare;
-		
-		students = new Student[numOfStudents];
-		forCompare = new Student[lines.length];
-		
-		for(int i =0;i<numOfStudents;i++)
-			students[i] = new Student("trashValue");	
-			
 		for(int i =0;i<lines.length;i++) {
 			
-				forCompare[i] = new Student(lines[i].split(",")[1].trim());
+				Student forCompare = new Student(lines[i].split(",")[1].trim());
 				
-					if(studentExist(students, forCompare[i])) {
+					if(studentExist(students, forCompare)) {
 						
-						students[j] = new Student(lines[i].split(",")[1].trim());
-						j++;
+						Student dent = new Student(lines[i].split(",")[1].trim());
+						students.add(dent);
+
 					}
 					
 		}
@@ -86,7 +83,7 @@ public class HGUCoursePatternAnalyzer {
 	 * @return boolean
 	 */
  
-	private boolean studentExist(Student[] students, Student student) {
+	private boolean studentExist( ArrayList<Student> students, Student student) {
 		
 		for(Student std:students) {
 			if((std.getName()).equals(student.getName())) {
@@ -103,23 +100,16 @@ public class HGUCoursePatternAnalyzer {
 	 * @return
 	 */
 
-	private Course[] initiateCourseArrayFromLines(String[] lines) {
+	private ArrayList<Course> initiateCourseArrayFromLines(String[] lines) {
 		
-		int j = 0;
+		ArrayList<Course> courses = new ArrayList<Course>(numOfCourses);
 		
-		Course[] forCompare;
-		
-		courses = new Course[numOfCourses];
-		forCompare = new Course[lines.length];
-		
-		for(int i =0;i<numOfCourses;i++)
-			courses[i] = new Course("trashValue");	
-			
 		for(int i =0;i<lines.length;i++) {
-				forCompare[i] = new Course(lines[i].split(",")[2].trim());
-					if(courseExist(courses, forCompare[i])) {
-						courses[j] = new Course(lines[i].split(",")[2].trim());
-						j++;
+				Course cour = new Course(lines[i].split(",")[2].trim());
+					if(courseExist(courses, cour)) {
+						
+						Course ses = new Course(lines[i].split(",")[2].trim());
+						courses.add(ses);
 					}
 					
 		}
@@ -135,7 +125,7 @@ public class HGUCoursePatternAnalyzer {
 	 * @return boolean
 	 */
 
-	private boolean courseExist(Course[] courses, Course course) {
+	private boolean courseExist(ArrayList<Course> courses, Course course) {
 		
 		for(Course crs:courses) {
 			if((crs.getCourseName()).equals(course.getCourseName())) {
